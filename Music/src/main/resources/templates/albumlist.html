@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Album list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />    
+</head>
+	<form sec:authorize="hasAnyAuthority('ADMIN', 'USER')" th:action="@{/logout}" method="post">
+	<input class="btn btn-outline-primary" style="float: right; margin-right: 60px; margin-top: 10px" type="submit" value="Sign Out"/>
+	</form>
+	<div sec:authorize="!hasAnyAuthority('ADMIN', 'USER')" style="float: right; margin-right: 60px; margin-top: 10px;">
+		<a class="btn btn-outline-primary" href="/login">Sign in</a>
+	</div>
+	<br>
+<body>
+	<div style="margin-top: 24px; margin-left: 20px; margin-right: 20px; text-align: center">
+		<a class="btn btn-info" href="/">Home</a>
+		<a class="btn btn-info" href="/artist_list">Artist list</a>
+		<a class="btn btn-info" href="/track_list">Track list</a>
+		<a class="btn btn-info" href="/recordlabel_list">Record label list</a>
+	</div>
+	<h1 style="margin: 20px; text-align: center">List of albums in database</h1>
+	<div style="margin-left: 50px; margin-right: 50px; text-align: center">
+	<table class="table table-striped">
+	
+		<tr>
+		    <th>Title</th>
+		    <th>Artist</th>
+		    <th>Year</th>
+		    <th>Record label</th>
+		    <th>Track list</th>
+		    <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
+		    <th sec:authorize="hasAuthority('ADMIN')">Delete</th>    
+		</tr>
+    	<tr th:each = "album : ${albums}">
+    		<td th:text="${album.title}"></td>
+    		<td th:text="${album.artist.name}"></td>
+    		<td th:text="${album.releaseYear}"></td>
+    		<td th:text="${album.recordLabel.name}"></td>
+    		<td><a class="btn btn-outline-success" th:href="@{/album_tracks/{id} (id=${album.albumId})}">Show</a></td>
+    		<td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-outline-warning" th:href="@{/edit_album/{id}(id=${album.albumId})}">✍</a></td>
+    		<td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-outline-danger" th:href="@{/delete_album/{id}(id=${album.albumId})}">🔥</a></td>
+    		
+    	</tr>
+     </table>
+     </div>
+     <div style="text-align:center">
+     	<a style="margin-bottom: 20px; text-align: center" class="btn btn-success" href="/add_album">Add new album</a>
+     </div>
+</body>
+</html>

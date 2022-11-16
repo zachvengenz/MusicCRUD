@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Add artist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<form sec:authorize="hasAnyAuthority('ADMIN', 'USER')" th:action="@{/logout}" method="post">
+	<input class="btn btn-outline-primary" style="float: right; margin-right: 60px; margin-top: 10px" type="submit" value="Sign Out"/>
+	</form>
+	<div sec:authorize="!hasAnyAuthority('ADMIN', 'USER')" style="float: right; margin-right: 60px; margin-top: 10px;">
+		<a class="btn btn-outline-primary" href="/login">Sign in</a>
+	</div>
+	<br>
+	<div style="text-align: center">
+		<h1>Add an artist to database</h1>
+		<div>
+			<form th:object="${artist}" th:action="@{save_artist}" action="#" method="post">
+			  	<label for="name">Name</label>
+				<input placeholder="e.g. Iron Maiden" type="text" id="name" th:field="*{name}" />
+				 <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+				<div style="clear: both; display: block; height: 10px;"></div>
+				<label for="name">Genre</label>
+				<input placeholder="e.g. Heavy Metal" type="text" id="genre" th:field="*{genre}" />
+				 <div class="alert alert-warning" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
+				<div style="clear: both; display: block; height: 10px;"></div>
+				<label for="name">Country</label>
+				<input placeholder="e.g. England" type="text" id="country" th:field="*{country}" />
+				 <div class="alert alert-warning" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></div>
+				<div style="clear: both; display: block; height: 10px;"></div>
+				<label for="name">Founding year</label>
+				<input placeholder="e.g. 1975" type="text" id="yearFounded" th:field="*{yearFounded}" />
+				 <div class="alert alert-warning" th:if="${#fields.hasErrors('yearFounded')}" th:errors="*{yearFounded}"></div>
+				<div style="clear: both; display: block; height: 10px;"></div>
+				
+				<input class="btn btn-success" type="submit" value="Save artist"></input>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Track list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />    
+</head>
+<body>
+	<form sec:authorize="hasAnyAuthority('ADMIN', 'USER')" th:action="@{/logout}" method="post">
+	<input class="btn btn-outline-primary" style="float: right; margin-right: 60px; margin-top: 10px" type="submit" value="Sign Out"/>
+	</form>
+	<div sec:authorize="!hasAnyAuthority('ADMIN', 'USER')" style="float: right; margin-right: 60px; margin-top: 10px;">
+		<a class="btn btn-outline-primary" href="/login">Sign in</a>
+	</div>
+	<br>
+	<div style="margin-top: 24px; margin-left: 20px; margin-right: 20px; text-align: center">
+		<a class="btn btn-info" href="/">Home</a>
+		<a class="btn btn-info" href="/artist_list">Artist list</a>
+		<a class="btn btn-info" href="/album_list">Album list</a>
+		<a class="btn btn-info" href="/recordlabel_list">Record label list</a>
+	</div>
+	
+	<h1 style="margin: 20px; text-align: center">List of tracks in database</h1>
+	<div style="margin-left: 50px; margin-right: 50px; text-align:center">
+	<table class="table table-striped">
+	
+		<tr>
+		    <th style="width: 32%">Title</th>
+		    <th>Artist</th>
+		    <th>Album</th>
+		    
+		</tr>
+    	<tr th:each = "track : ${tracks}">
+    		<td th:text="${track.title}"></td>
+    		<td th:text="${track.album.artist.name}"></td>
+    		<td th:text="${track.album.title}"></td>
+    	</tr>
+     </table>
+     </div>
+     <div style="text-align: center">
+     	<a style="margin-bottom: 20px; text-align: center" class="btn btn-success" href="/">Go to front page</a>
+     </div>
+</body>
+</html>

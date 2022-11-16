@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Add record label</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<form sec:authorize="hasAnyAuthority('ADMIN', 'USER')" th:action="@{/logout}" method="post">
+	<input class="btn btn-outline-primary" style="float: right; margin-right: 60px; margin-top: 10px" type="submit" value="Sign Out"/>
+	</form>
+	<div sec:authorize="!hasAnyAuthority('ADMIN', 'USER')" style="float: right; margin-right: 60px; margin-top: 10px;">
+		<a class="btn btn-outline-primary" href="/login">Sign in</a>
+	</div>
+<br>
+	<div style="text-align: center">
+		<h1>Add a record label to database</h1>
+		<div>
+			<form th:object="${recordlabel}" th:action="@{save_recordlabel}" action="#" method="post">
+			  	<label for="name">Name</label>
+				<input type="text" id="name" th:field="*{name}" />
+				<div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+				<div style="clear: both; display: block; height: 10px;"></div>
+				<input class="btn btn-success" type="submit" value="Save record label"></input>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

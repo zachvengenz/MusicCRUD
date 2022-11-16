@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Edit album</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>	
+	<form sec:authorize="hasAnyAuthority('ADMIN', 'USER')" th:action="@{/logout}" method="post">
+	<input class="btn btn-outline-primary" style="float: right; margin-right: 60px; margin-top: 10px" type="submit" value="Sign Out"/>
+	</form>
+	<div sec:authorize="!hasAnyAuthority('ADMIN', 'USER')" style="float: right; margin-right: 60px; margin-top: 10px;">
+		<a class="btn btn-outline-primary" href="/login">Sign in</a>
+	</div>
+	<div style="text-align: center">
+		<h1 style="margin-bottom: 20px">Edit album</h1>
+		<form th:object="${album}" th:action="@{/update_album/{id}(id=${album.albumId})}" action="#" method="post">
+			<label for="id"></label>
+			<input type="hidden" id="id" th:field="*{albumId}" readonly="readonly" />
+		  	<label for="name">Title</label>
+			<input type="text" id="title" th:field="*{title}" />
+			 <div class="alert alert-warning" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="name">Year</label>
+			<input type="text" id="releaseYear" th:field="*{releaseYear}" />
+			 <div class="alert alert-warning" th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}"></div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="artistlist">Artist</label>
+				<select id="artistlist" th:field="*{artist}">
+					<option th:each="artist: ${artists}" th:value="${artist.artistId}" th:text="${artist.name}"></option>
+				</select><br>
+			<label for="recordlabellist">Record label</label>
+				<select id="recordlabellist" th:field="*{recordLabel}">
+					<option th:each="recordlabel: ${recordlabels}" th:value="${recordlabel.recordLabelId}" th:text="${recordlabel.name}"></option>
+				</select><br>
+			<input class="btn btn-success" type="submit" value="Save ✓"></input>
+		</form>
+	</div>
+</body>
+</html>

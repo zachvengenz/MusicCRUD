@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Edit album</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>	
+	<form sec:authorize="hasAnyAuthority('ADMIN', 'USER')" th:action="@{/logout}" method="post">
+	<input class="btn btn-outline-primary" style="float: right; margin-right: 60px; margin-top: 10px" type="submit" value="Sign Out"/>
+	</form>
+	<div sec:authorize="!hasAnyAuthority('ADMIN', 'USER')" style="float: right; margin-right: 60px; margin-top: 10px;">
+		<a class="btn btn-outline-primary" href="/login">Sign in</a>
+	</div>
+	<div style="text-align: center">
+		<h1 style="margin-bottom: 20px">Edit artist</h1>
+		<form th:object="${artist}" th:action="@{/update_artist/{id}(id=${artist.artistId})}" action="#" method="post">
+			<label for="id"></label>
+			<input type="hidden" id="id" th:field="*{artistId}" readonly="readonly" />
+		  	<label for="name">Name</label>
+			<input type="text" id="name" th:field="*{name}" />
+			 <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="name">Genre</label>
+			<input type="text" id="genre" th:field="*{genre}" />
+			 <div class="alert alert-warning" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="name">Country</label>
+			<input type="text" id="country" th:field="*{country}" />
+			 <div class="alert alert-warning" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="name">Founding year</label>
+			<input type="text" id="yearFounded" th:field="*{yearFounded}" />
+			 <div class="alert alert-warning" th:if="${#fields.hasErrors('yearFounded')}" th:errors="*{yearFounded}"></div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+			<input class="btn btn-success" type="submit" value="Save ✓"></input>
+		</form>
+	</div>
+</body>
+</html>
