@@ -329,25 +329,6 @@ public class MusicApplication {
 				log.info(track.toString());
 			}
 			
-			/*
-			
-			Category category1 = new Category("Scifi/Fantasy");
-			crepository.save(category1);
-			Category category2 = new Category("Drama");
-			crepository.save(category2);
-			Category category3 = new Category("Mystery");
-			crepository.save(category3);
-			Category category4 = new Category("Biography");
-			crepository.save(category4);
-			
-			log.info("save a few books");
-			brepository.save(new Book("Seven Deadly Sins", "Corey Taylor", 2011, "9780306819278", 9.90, category4));
-			brepository.save(new Book("America 51", "Corey Taylor", 2017, "9780306825446", 14.40, category3));
-			brepository.save(new Book("You're Making Me Hate You", "Corey Taylor", 2015, "9780091960315", 13.80, category2));
-			brepository.save(new Book("A Funny Thing Happened on the Way to Heaven", "Corey Taylor", 2013, "9780091949655", 11.20, category4));
-			
-			*/
-			
 		};
 	}
 
